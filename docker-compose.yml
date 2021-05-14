@@ -1,0 +1,26 @@
+# Compose file version
+version: "3.9"
+
+# services
+services: 
+  
+  frontend:
+    image: muhammad1/exam105-fe:latest
+    networks:
+      - exam105
+  
+  backend:
+    image: muhammad1/exam105-be:latest
+    networks:
+      - web_app
+    env_file:
+      - /home/ubuntu/exam105.env
+    networks:
+      - exam105
+
+
+# networks
+networks:
+  exam105:
+    name: "exam105_network"
+    driver: bridge
