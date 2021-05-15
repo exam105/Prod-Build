@@ -8,19 +8,28 @@ services:
     image: muhammad1/exam105-fe:latest
     networks:
       - exam105
-  
+    deploy:
+      replicas: 2
+      restart_policy:
+        condition: on-failure
+      placement:
+        constraints: [node.role == worker]
+        
   backend:
     image: muhammad1/exam105-be:latest
-    networks:
-      - web_app
     env_file:
       - /home/ubuntu/exam105.env
     networks:
       - exam105
-
+    deploy:
+      replicas: 2
+      restart_policy:
+        condition: on-failure
+      placement:
+        constraints: [node.role == worker]
 
 # networks
 networks:
   exam105:
     name: "exam105_network"
-    driver: bridge
+    driver: overlay
